@@ -1,0 +1,36 @@
+{
+  "name": "be_2_76855",
+  "version": "1.0.0",
+  "description": "Coderhouse Entrega01: Proyecto ecommerce con un CRUD de usuarios",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wifrons/ProductCarts-MongoDB-login-JSApi.git"
+  },
+  "author": "William Rodriguez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wifrons/ProductCarts-MongoDB-login-JSApi/issues"
+  },
+  "homepage": "https://github.com/wifrons/ProductCarts-MongoDB-login-JSApi?tab=readme-ov-file#productcarts-mongodb-login-jsapi",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "connect-mongo": "^5.1.0",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.17.0",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
