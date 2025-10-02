@@ -2,7 +2,7 @@ import { Router } from "express";
 import mongoose from "mongoose";
 import CartsModel from "../config/models/carts.model.js";
 
-import { requiereJwtCookie, requireRole, extractUserId } from '../middleware/auth.middleware.js'
+import { requiereJwtCookie, requireRole, extractUserId } from '../middleware/policies.middleware.js'
 
 const router = Router();
 router.use(requiereJwtCookie,extractUserId);

@@ -1,6 +1,6 @@
 import CustomRouter from "./custom.router.js";
-import { requiereJwtCookie } from '../middleware/auth.middleware.js';
-import  {policies}  from "../middleware/policies.middleware.js";
+//import { requiereJwtCookie } from '../middleware/auth.middleware.js';
+import  {policies, requiereJwtCookie}  from "../middleware/policies.middleware.js";
 import ProductsModel from "../config/models/product.model.js";
 
 const router = new CustomRouter({ mergeParams: true });

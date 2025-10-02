@@ -12,9 +12,9 @@ import env, { validateEnv } from '../../config/env.config.js';
 import logger from '../../middleware/logger.middleware.js';
 
 import homeRouter from '../../routes/home.router.js'
-import authRouter from '../../routes/auth.router.js';
+//import authRouter from '../../routes/auth.router.js';
 import cartsRouter from '../../routes/carts.router.js';
-import productsRouter from '../../routes/products.router.js';
+//import productsRouter from '../../routes/products.router.js';
 import sessionsRouter from '../../routes/sessions.router.js';
 import mainRouter from '../../routes/main.router.js';
 import advancedRouter from '../../routes/advance.router.js';
@@ -62,9 +62,7 @@ export const startServer = async () => {
 
     // ROUTERS
     app.use('/', homeRouter);
-    app.use('/auth', authRouter);
     app.use('/carts', cartsRouter);
-    app.use('/products', productsRouter);
     app.use('/sessions', sessionsRouter);
 
     //ROUTERS GROUP 
@@ -72,7 +70,6 @@ export const startServer = async () => {
 
     //ROUTERS ADVANCED 
     app.use('/api/advanced', advancedRouter);
-    app.use('/api/products', productAdvRouter);
 
     //ROUTERS PROCESS
     app.use('/api/process', processRouter);
