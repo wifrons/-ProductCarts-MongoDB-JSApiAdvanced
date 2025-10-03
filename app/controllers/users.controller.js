@@ -45,5 +45,24 @@ export const UserController = {
     logout(req, res) {
         res.clearCookie('access_token', { path: '/' });
         res.json({ message: 'Logout Ok' });
+    },
+
+    async requestReset(req, res) {
+        try {
+            await service.requestPasswordReset(req.body.email);
+            res.status(200).json({ message: "Email sent for recovery." });
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    },
+
+    async resetPassword(req, res) {
+        try {
+            await service.resetPassword(req.body.token, req.body.newPassword);
+            res.status(200).json({ message: "Pwd updated successfully" });
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
     }
+
 };

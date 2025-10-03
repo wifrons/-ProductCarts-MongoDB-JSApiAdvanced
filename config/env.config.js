@@ -18,7 +18,7 @@ export function validateEnv() {
     if (env.MONGO_TARGET === 'LOCAL' && !env.MONGO_URI) missing.push('MONGO_URI');
     if (env.MONGO_TARGET === 'ATLAS' && !env.MONGO_URI_ATLAS) missing.push('MONGO_URI_ATLAS');
     if (missing.length) {
-        console.error('[ENV] 😥 Faltan variables de entorno 🏜️ 🏝️ 🏞️ -->> ', missing.join(', '));
+        console.error('[ENV] 😥 Missing environment variables 🏜️ 🏝️ 🏞️ -->> ', missing.join(', '));
         process.exit(1);
     }
 }

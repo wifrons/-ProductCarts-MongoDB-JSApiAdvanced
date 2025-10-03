@@ -1,8 +1,11 @@
 
 import bcrypt from 'bcrypt';
+import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import { UserMongoDAO } from "../dao/user.mongo.dao.js";
 import { UserDTO } from "../dto/users.dto.js";
+import sendEmail from '../utils/email.js';
+
 
 export class UserService {
     constructor() {
@@ -39,4 +42,27 @@ export class UserService {
     async getUserById(id) {
         return await this.userDAO.getById(id);
     }
+    
+    async requestPasswordReset(email) {
+        const user = await this.userDAO.findByEmail(email);
+        if (!user) throw new Error("User not found");
+
+        const token = crypto.randomBytes(32).toString('hex');
+        const expiresAt = Date.now() + 1000 * 60 * 30; // 30 min
+
+        await this.userDAO.saveResetToken(user._id, token, expiresAt);
+
+        const resetLink = `https://tusitio.com/reset-password/${token}`;
+        const html = `<p>Haz clic para recuperar tu contraseña:</p><a href="${resetLink}">${resetLink}</a>`;
+        await sendEmail(user.email, "Password recovery.", html);
+    }
+
+    async resetPassword(token, newPassword) {
+        const user = await this.userDAO.findByResetToken(token);
+        if (!user) throw new Error("Invalid or expired token.");
+
+        const hashed = await bcrypt.hash(newPassword, 10);
+        await this.userDAO.updatePassword(user._id, hashed);
+    }
+
 }
