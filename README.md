@@ -1,105 +1,122 @@
 ************************************************************************************************
-WILLIAM RODRIGUEZ - ENTREGA 01 - API MANEJADOR DE PRODRUCTOS Y CARRITOS 
-CON LOGIN USANDO MONGOOSE + POPULATE + AUTENTICACION JWT + MIDDLEWARE + PASSPORT
+WILLIAM RODRIGUEZ - ENTREGA FINAL - API E-COMERCE
+CON LOGIN USANDO AUTENTICACION JWT + MIDDLEWARE + PASSPORT + MONGOOSE + POPULATE + 
+ARQUITECTURA EN CAPAS: DAO -> DTO -> SERVICE -> CONTROLLER
 ************************************************************************************************
 
 -->>> El server dispone de las rutas: 
 
 -DESDE POSTMAN:
-http://localhost:3000/
-http://localhost:3000/auth/
-http://localhost:3000/products/
-http://localhost:3000/carts/ 
-http://localhost:3000/api/sessions/
+http://localhost:3000
+
 
 -->>> Metodos HTTP implementados
 
-*************************************************AUTHENTICATION
-//RETORNA LOS DATOS ASOCIADOS AL LOGIN
-GET  -> http://localhost:3000/auth/jwt/me
+------------AUTHENTICATION
+-> REGISTRA UN USUARIO
+	POST:
+		/api/mainRouter/auth/register
+		BODY:
+		{
+			"first_name": "glendys",
+			"last_name": "partida",
+			"email": "glendys@gmail.com",
+			"age": "60",
+			"password": "123456"
+		}
 
-//REGISTRA UN USUARIO.
-POST -> http://localhost:3000/auth/register
-    BODY:
-        {
-            "first_name": "sara",
-            "last_name": "rodriguez",
-            "email": "sara@gmail.com",
-            "age": "60",
-            "password": "sara"
-        }
+-> RETORNA LOS DATOS ASOCIADOS AL LOGIN
+	GET:
+		/api/mainRouter/auth/jwt/me
+		
+-> HACER LOGIN
+	POST:
+		/api/mainRouter/auth/jwt/login
+		BODY:
+		{
+			"email": "glendys@gmail.com",
+			"password": "123456"
+		}
+		
+-> HACER LOGOUT
+	POST:
+		/api/mainRouter/auth/jwt/logout
 
-//HACER LOGIN
-POST -> http://localhost:3000/auth/jwt/login
-    BODY:
-        {
-            "email": "sara@gmail.com",
-            "password": "sara"
-        }
+------------SESSIONS
+-> RETORNA LOGIN ACTUAL(CURRENT)
+	GET:
+		/api/mainRouter/sessions/current
+		
+------------PRODUCTS
 
-//HACER LOGOUT
-POST -> http://localhost:3000/auth/jwt/logout
+-> OBTENER TODOS LOS PRODUCTOS
+	GET:
+		/api/mainRouter/products/
+		
+-> OBTENER UN PRODUCTO ESPECIFICO
+	GET:
+		/api/mainRouter/products/:pid
 
-*************************************************CARTS
-// OBTIENE EL CARRITO ASOCIADO AL LOGIN.
-GET  -> http://localhost:3000/carts/
+-> INSERTAR UN PRODUCTO ESPECIFICADO
+	POST:
+		/api/mainRouter/products/
+		BODY:
+		{
+		"title": "Boligrafo Papermate 09",
+		"description": "Boligrafo Papermate 09",
+		"code": "of-09",
+		"price": 90,
+		"status": 1,
+		"stock": 20,
+		"category": "oficina",
+		"thumbnails": [
+		  "https://http2.mlstatic.com/D_NQ_NP_2X_650061-MLA80166861089_102024-F.webp"
+		]
+		} 
+		
+-> ACTUALIZAR UN PRODUCTO ESPECIFICADO
+	PUT:
+		/api/mainRouter/products/:pid
+		BODY:
+		{
+		"title": "Boligrafo Papermate 09",
+		"description": "Boligrafo Papermate 09",
+		"code": "of-09",
+		"price": 900,
+		"status": 1,
+		"stock": 10,
+		"category": "oficina",
+		"thumbnails": [
+		  "https://http2.mlstatic.com/D_NQ_NP_2X_650061-MLA80166861089_102024-F.webp"
+		]
+		} 
+		
+-> ELIMINAR UN PRODUCTO ESPECIFICADO
+	DEL:
+		/api/mainRouter/products/:pid
+		
+------------CARTS
 
-// GENERA UN CARRITO ASOCIADO AL LOGIN.
-POST -> http://localhost:3000/carts/
+-> OBTIENE EL CARRITO ASOCIADO AL LOGIN
+	GET:
+		/api/mainRouter/carts/
+		
+-> GENERA UN CARRITO ASOCIADO AL LOGIN
+	POST:
+		/api/mainRouter/carts/
+		
+-> AGREGA UN PRODUCTO A UN CARRITO ASOCIADO AL LOGIN
+	POST:
+		/api/mainRouter/carts/product/:pid
+		
+-> ELIMINA UN PRODUCTO DEL CARRITO ASOCIADO AL LOGIN
+	DEL:
+		/api/mainRouter/carts/product/:pid
+		
+-> ELIMINA TODOS LOS PRODUCTOS DEL CARRITO ASOCIADO AL LOGIN
+	DEL:
+		/api/mainRouter/carts/
 
-//AGREGA UN PRODUCTO A UN CARRITO ASOCIADO AL LOGIN.
-POST -> http://localhost:3000/carts/product/:pid
-
-//ELIMINA UN PRODUCTO DEL CARRITO ASOCIADO AL LOGIN
-DELETE -> http://localhost:3000/carts/product/:pid
-
-//ELIMINA TODOS LOS PRODUCTOS DEL CARRITO ASOCIADO AL LOGIN
-DELETE -> http://localhost:3000/carts/
-
-*************************************************PRODUCTS
-//OBTENER TODOS LOS PRODUCTOS
-GET  -> http://localhost:3000/products/
-
-//OBTENER UN PRODUCTO ESPECIFICO
-GET  -> http://localhost:3000/products/:pid
-
-//INSERTAR UN PRODUCTO ESPECIFICADO
-POST  -> http://localhost:3000/products/
-    BODY:
-        {
-            "title": "Boligrafo Papermate 07",
-            "description": "Boligrafo Papermate 07",
-            "code": "of-07",
-            "price": 70,
-            "status": 1,
-            "stock": 20,
-            "category": "oficina",
-            "thumbnails": [
-            "https://http2.mlstatic.com/D_NQ_NP_2X_650061-MLA80166861089_102024-F.webp"
-            ]
-        } 
-
-//ACTUALIZAR UN PRODUCTO ESPECIFICADO
-PUT  -> http://localhost:3000/products/:pid
-    BODY:
-        {
-            "title": "Boligrafo Papermate 01",
-            "description": "Boligrafo Papermate 01",
-            "code": "of-01",
-            "price": 10,
-            "status": 1,
-            "stock": 20,
-            "category": "oficina",
-            "thumbnails": [
-            "https://http2.mlstatic.com/D_NQ_NP_2X_667501-MLU54959898837_042023-F.webp"
-            ]
-        } 
-
-//ELIMINAR UN PRODUCTO ESPECIFICADO
-DELETE  -> http://localhost:3000/products/:pid
-
-*************************************************SESSIONS
-GET  -> http://localhost:3000/api/sessions/current
 
 
 ************************************************ EJEMPLO MODELO JSON DE PRODUCTS
