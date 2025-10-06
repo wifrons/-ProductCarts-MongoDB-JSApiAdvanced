@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { UserController } from '../app/controllers/users.controller.js';
+import { UserController } from '../app/controllers/auth.controller.js';
 import { requiereJwtCookie } from '../middleware/policies.middleware.js';
 
 const router = Router();

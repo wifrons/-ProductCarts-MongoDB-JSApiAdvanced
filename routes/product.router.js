@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { requiereJwtCookie, requireRole } from '../middleware/policies.middleware.js';
-import { productController as prodCtrl } from '../app/controllers/products.controller.js';
+import { productController as prodCtrl } from '../app/controllers/product.controller.js';
 
 const router = Router();
 router.use(requiereJwtCookie);

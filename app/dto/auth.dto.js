@@ -35,12 +35,10 @@ export class UserDTO {
             password: this.password
         };
     }
-    // 🔐 NUEVO: generación de token
     static generateResetToken() {
         return crypto.randomBytes(32).toString('hex');
     }
 
-    // 📧 NUEVO: formato de email
     static formatResetEmail(token) {
         return {
             subject: "Recuperación de contraseña",

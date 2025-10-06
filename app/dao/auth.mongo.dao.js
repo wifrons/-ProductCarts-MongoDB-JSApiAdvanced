@@ -29,7 +29,4 @@ export class UserMongoDAO extends BaseDAO {
             resetTokenExpires: null
         });
     }
-
-
-
 }

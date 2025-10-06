@@ -1,4 +1,3 @@
-// controllers/cart.controller.js
 import { CartService } from '../services/cart.service.js';
 
 export const CartController = {
@@ -44,6 +43,15 @@ export const CartController = {
             res.status(200).json(result);
         } catch (error) {
             res.status(500).json({ status: "error", message: error.message });
+        }
+    },
+
+    purchaseCart: async (req, res) => {
+        try {
+            const result = await CartService.purchaseCart(req.userId);
+            res.status(200).json(result);
+        } catch (error) {
+            res.status(400).json({ status: "error", message: error.message });
         }
     }
 };

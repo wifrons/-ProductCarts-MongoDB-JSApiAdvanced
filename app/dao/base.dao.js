@@ -12,9 +12,14 @@ export class BaseDAO {
         if (options.select) q.select(options.select);
         return await q.lean();
     }
-    // 👇 Agregá runValidators
+
     async updateById(id, data) {
         return await this.model.findByIdAndUpdate(id, data, { new: true, runValidators: true }).lean();
     }
     async deleteById(id) { return await this.model.findByIdAndDelete(id).lean(); }
+
+    async updateStock(id, newStock) {
+        return await this.model.findByIdAndUpdate(id, { stock: newStock }, { new: true });
+    }
+
 }

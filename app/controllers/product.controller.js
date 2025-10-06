@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { ProductService } from '../services/products.service.js';
-import { toCreateProductDTO, toUpdateProductDTO } from "../dto/products.dto.js";
+import { ProductService } from '../services/product.service.js';
+import { toCreateProductDTO, toUpdateProductDTO } from "../dto/product.dto.js";
 
 const svc = new ProductService();
 

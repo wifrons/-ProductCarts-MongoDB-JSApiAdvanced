@@ -12,14 +12,9 @@ import env, { validateEnv } from '../../config/env.config.js';
 import logger from '../../middleware/logger.middleware.js';
 
 import homeRouter from '../../routes/home.router.js'
-//import authRouter from '../../routes/auth.router.js';
-import cartsRouter from '../../routes/carts.router.js';
-//import productsRouter from '../../routes/products.router.js';
 import sessionsRouter from '../../routes/sessions.router.js';
 import mainRouter from '../../routes/main.router.js';
-import advancedRouter from '../../routes/advance.router.js';
 import processRouter from '../../routes/process.router.js';
-import productAdvRouter from '../../routes/products.advanced.router.js';
 
 const app = express();
 
@@ -60,20 +55,16 @@ export const startServer = async () => {
     initPassport();
     app.use(passport.initialize());
 
-    // ROUTERS
+    // ROUTER HOME
     app.use('/', homeRouter);
-    app.use('/carts', cartsRouter);
-    app.use('/sessions', sessionsRouter);
-
-    //ROUTERS GROUP 
-    app.use('/api/mainRouter', mainRouter);
-
-    //ROUTERS ADVANCED 
-    app.use('/api/advanced', advancedRouter);
 
     //ROUTERS PROCESS
     app.use('/api/process', processRouter);
-    
+    app.use('/sessions', sessionsRouter);
+
+    //ROUTERS ECOMERCE 
+    app.use('/api/mainRouter', mainRouter);
+
 
     app.use((req, res) => {
         res.status(404).json({ error: "Page not fount.!" });

@@ -2,9 +2,9 @@
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
-import { UserMongoDAO } from "../dao/user.mongo.dao.js";
-import { UserDTO } from "../dto/users.dto.js";
-import sendEmail from '../utils/email.js';
+import { UserMongoDAO } from "../dao/auth.mongo.dao.js";
+import { UserDTO } from "../dto/auth.dto.js";
+import { MailerService } from './mailer.service.js';
 
 
 export class UserService {
@@ -52,9 +52,10 @@ export class UserService {
 
         await this.userDAO.saveResetToken(user._id, token, expiresAt);
 
-        const resetLink = `https://tusitio.com/reset-password/${token}`;
-        const html = `<p>Haz clic para recuperar tu contraseña:</p><a href="${resetLink}">${resetLink}</a>`;
-        await sendEmail(user.email, "Password recovery.", html);
+        const resetLink = `http://localhost:3000/reset-password/${token}`;
+        const html = `<p>Click to recover your password:</p><a href="${resetLink}">${resetLink}</a>`;
+
+        await MailerService.SendCustomEmail(user.email, "Password recovery.", html);
     }
 
     async resetPassword(token, newPassword) {

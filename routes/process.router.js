@@ -3,7 +3,6 @@ import env, { getPublicEnv } from '../config/env.config.js';
 
 const router = Router();
 
-//(OK)
 router.get('/info', (req, res) => {
     res.json({
         pid: process.pid,
@@ -17,7 +16,6 @@ router.get('/info', (req, res) => {
     });
 });
 
-//(OK)
 router.get('/env', (req, res) => {
     res.json(getPublicEnv());
 });

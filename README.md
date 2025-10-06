@@ -42,6 +42,22 @@ http://localhost:3000
 	POST:
 		/api/mainRouter/auth/jwt/logout
 
+-> RECUPERACION CONTRASENA
+	POST:
+		/api/mainRouter/auth/request-reset
+		BODY:
+		{
+			"message": "Email sent for recovery."
+		}
+
+-> ESTABLECER NUEVA CONTRASENA
+	POST:
+		/api/mainRouter/auth/reset-password
+		BODY:
+		{
+			"token": "c75c4d24f6b3581bdaafb52177efc9953564bd45995ae3fe6d17e9f6efee4f07",
+			"newPassword": "123456"
+		}
 ------------SESSIONS
 -> RETORNA LOGIN ACTUAL(CURRENT)
 	GET:
@@ -92,7 +108,7 @@ http://localhost:3000
 		} 
 		
 -> ELIMINAR UN PRODUCTO ESPECIFICADO
-	DEL:
+	DELETE:
 		/api/mainRouter/products/:pid
 		
 ------------CARTS
@@ -110,14 +126,16 @@ http://localhost:3000
 		/api/mainRouter/carts/product/:pid
 		
 -> ELIMINA UN PRODUCTO DEL CARRITO ASOCIADO AL LOGIN
-	DEL:
+	DELETE:
 		/api/mainRouter/carts/product/:pid
 		
 -> ELIMINA TODOS LOS PRODUCTOS DEL CARRITO ASOCIADO AL LOGIN
-	DEL:
+	DELETE:
 		/api/mainRouter/carts/
 
-
+-> FINALIZAR COMPRA(GENERAR TICKET)
+	POST:
+		/api/mainRouter/carts/purchase
 
 ************************************************ EJEMPLO MODELO JSON DE PRODUCTS
 {

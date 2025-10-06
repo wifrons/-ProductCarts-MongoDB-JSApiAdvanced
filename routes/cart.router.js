@@ -1,4 +1,3 @@
-// routes/cart.router.js
 import { Router } from "express";
 import { CartController } from "../app/controllers/cart.controller.js";
 import { requiereJwtCookie, extractUserId } from '../middleware/policies.middleware.js';
@@ -11,5 +10,6 @@ router.post("/", CartController.createCart);
 router.post("/product/:pid", CartController.addProduct);
 router.delete("/product/:pid", CartController.removeProduct);
 router.delete("/", CartController.clearCart);
+router.post('/purchase', CartController.purchaseCart);
 
 export default router;

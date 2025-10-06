@@ -1,4 +1,4 @@
-import { UserService } from '../services/users.advanced.service.js';
+import { UserService } from '../services/auth.service.js';
 
 const service = new UserService();
 
